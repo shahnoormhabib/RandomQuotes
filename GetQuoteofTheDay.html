@@ -1,0 +1,43 @@
+<html>
+    <head><script src="jquery.js"></script>
+    <style>
+        #tweet{
+            display:inline-block;
+        }
+        #tweet{   
+            text-decoration:none;
+        }          
+   </style>
+</head>
+<body> 
+ <div id="quote-content" class = "col-xs-12 well message">
+      The message will go here
+ </div> 
+
+<div class = "col-xs-12">
+<button id = "getQuote" class = "btn btn-primary">
+        Get Quote of the day
+      </button>
+     <a id="tweet"" target="ext"><i class="fa fa-twitter"></i> Tweet</a></button>
+</div>
+<script>
+    $('#getQuote').click(randomQuote);
+
+       
+    function randomQuote() {
+  $.ajax({
+      url: "https://api.forismatic.com/api/1.0/?",
+      dataType: "jsonp",
+      data: "method=getQuote&format=jsonp&lang=en&jsonp=?",
+      success: function( response ) {
+        $("#quote-content").html("<p id='random_quote' class='lead text-center'>" +
+          response.quoteText + "<br/>&dash; " + response.quoteAuthor + " &dash;</p>");
+          
+        $("#tweet").attr("href", "https://twitter.com/home/?status=" + response.quoteText +
+          ' (' + response.quoteAuthor + ')');
+      }
+  });
+}
+</script>
+</body>
+</html>
